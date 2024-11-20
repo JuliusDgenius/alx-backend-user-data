@@ -10,7 +10,7 @@ from sqlalchemy.orm.session import Session
 
 from user import Base, User
 
-DATA = ['id', 'email', 'hashed_password', 'session_id', 'reset_token']
+attrs = ['id', 'email', 'hashed_password', 'session_id', 'reset_token']
 
 
 class DB:
@@ -75,7 +75,7 @@ class DB:
 
         user = self.find_user_by(id=user_id)
         for key, val in kwargs.items():
-            if key not in DATA:
+            if key not in attrs:
                 raise ValueError
             setattr(user, key, val)
         self._session.commit()
