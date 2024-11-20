@@ -10,6 +10,8 @@ from sqlalchemy.orm.session import Session
 
 from user import Base, User
 
+DATA = ['id', 'email', 'hashed_password', 'session_id', 'reset_token']
+
 
 class DB:
     """DB class
@@ -62,13 +64,19 @@ class DB:
         """
         Updates a user.
         """
+        # user = self.find_user_by(id=user_id)
+        # if user:
+        #     try:
+        #         for key, value in kwargs.items():
+        #             user.key = value
+        #         self.__session.commit()
+        #     except ValueError:
+        #         print('user has no attribute', key)
+
         user = self.find_user_by(id=user_id)
-        if user:
-            try:
-                for key, value in kwargs.items():
-                    user.key = value
-                self.__session.commit()
-                return None
-            except ValueError:
-                print('user has no attribute', key)
-                return None
+        for key, val in kwargs.items():
+            if key not in DATA:
+                raise ValueError
+            setattr(user, key, val)
+        self._session.commit()
+        return None
