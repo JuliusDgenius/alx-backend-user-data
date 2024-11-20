@@ -7,7 +7,6 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.session import Session
-from typing import Any
 
 from user import Base, User
 
@@ -44,7 +43,7 @@ class DB:
 
         return user
 
-    def find_user_by(self, **kwargs: Any)-> User:
+    def find_user_by(self, **kwargs)-> User:
         """
         Returns the first row found in the `users` table.
         """
@@ -58,3 +57,15 @@ class DB:
             raise InvalidRequestError(f"Invalid parameter {e}")
         finally:
             self.__session.close()
+
+    def update_user(self, user_id: int, **kwargs)-> None:
+        """
+        Updates a user.
+        """
+        user = self.find_user_by(id=user_id)
+        if user:
+            try:
+                for key, value in kwargs.items():
+                    user.key = value
+            except ValueError:
+                print('user has no attribute', key)
