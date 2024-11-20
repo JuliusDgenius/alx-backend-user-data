@@ -70,3 +70,4 @@ class DB:
                 self.__session.commit()
             except ValueError:
                 print('user has no attribute', key)
+        return None
