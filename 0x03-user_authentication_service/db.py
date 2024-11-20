@@ -4,6 +4,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.session import Session
 
 from user import Base, User
@@ -40,3 +42,18 @@ class DB:
         self._session.commit()
 
         return user
+
+    def find_user_by(self, **kwargs):
+        """
+        Returns the first row found in the `users` table.
+        """
+        if not kwargs:
+            raise InvalidRequestError("No parameter provided")
+        try:
+            return self.__session.query(User).filter_by(**kwargs).one()
+        except NoResultFound:
+            raise NoResultFound("No result found for the parameter")
+        except Exception as e:
+            raise InvalidRequestError(f"Invalid parameter {e}")
+        finally:
+            self.__session.close()
