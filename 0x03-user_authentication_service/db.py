@@ -58,7 +58,7 @@ class DB:
         finally:
             self.__session.close()
 
-    # def update_user(self, user_id: int, **kwargs) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
     #     """
     #     Updates a user.
     #     """
