@@ -43,7 +43,7 @@ class DB:
 
         return user
 
-    def find_user_by(self, **kwargs)-> User:
+    def find_user_by(self, **kwargs) -> User:
         """
         Returns the first row found in the `users` table.
         """
@@ -58,7 +58,7 @@ class DB:
         finally:
             self.__session.close()
 
-    def update_user(self, user_id: int, **kwargs)-> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """
         Updates a user.
         """
