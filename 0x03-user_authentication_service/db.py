@@ -58,16 +58,24 @@ class DB:
         finally:
             self.__session.close()
 
-    def update_user(self, user_id: int, **kwargs) -> None:
-        """
-        Updates a user.
-        """
-        user = self.find_user_by(id=user_id)
-        if user:
-            try:
-                for key, value in kwargs.items():
-                    user.key = value
-                self.__session.commit()
-            except ValueError:
-                print('user has no attribute', key)
+    # def update_user(self, user_id: int, **kwargs) -> None:
+    #     """
+    #     Updates a user.
+    #     """
+    #     user = self.find_user_by(id=user_id)
+    #     if user:
+    #         try:
+    #             for key, value in kwargs.items():
+    #                 user.key = value
+    #             self.__session.commit()
+    #         except ValueError:
+    #             print('user has no attribute', key)
+    #     return None
+
+    user = self.find_user_by(id=user_id)
+        for key, val in kwargs.items():
+            if key not in DATA:
+                raise ValueError
+            setattr(user, key, val)
+        self._session.commit()
         return None
