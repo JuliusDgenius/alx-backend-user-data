@@ -70,11 +70,3 @@ class DB:
                 self.__session.commit()
             except ValueError:
                 print('user has no attribute', key)
-
-          # user = self.find_user_by(id=user_id)
-          # for key, val in kwargs.items():
-          #   if key not in DATA:
-          #       raise ValueError
-          #   setattr(user, key, val)
-          #   self._session.commit()
-          #   return None
