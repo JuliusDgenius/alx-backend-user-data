@@ -67,5 +67,6 @@ class DB:
             try:
                 for key, value in kwargs.items():
                     user.key = value
+                self.__session.commit()
             except ValueError:
                 print('user has no attribute', key)
