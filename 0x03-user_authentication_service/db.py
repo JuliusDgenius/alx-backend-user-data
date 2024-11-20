@@ -49,16 +49,20 @@ class DB:
         """
         Returns the first row found in the `users` table.
         """
-        if not kwargs:
-            raise InvalidRequestError("No parameter provided")
-        try:
-            return self.__session.query(User).filter_by(**kwargs).one()
-        except NoResultFound:
-            raise NoResultFound("No result found for the parameter")
-        except Exception as e:
-            raise InvalidRequestError(f"Invalid parameter {e}")
-        finally:
-            self.__session.close()
+        # if not kwargs:
+        #     raise InvalidRequestError("No parameter provided")
+        # try:
+        #     return self.__session.query(User).filter_by(**kwargs).one()
+        # except NoResultFound:
+        #     raise NoResultFound("No result found for the parameter")
+        # except Exception as e:
+        #     raise InvalidRequestError(f"Invalid parameter {e}")
+        # finally:
+        #     self.__session.close()
+        user = self._session.query(User).filter_by(**kwargs).first()
+        if not user:
+            raise NoResultFound
+        return user
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """
